@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pokémon Project - Game</title>
+
+  <link rel="stylesheet" href="pkmn.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="" crossorigin="anonymous">
+</head>
+<body>
+
+  <div id="landing-page" class="screen active" role="main" aria-label="Landing screen">
+    <canvas id="fire-fx"></canvas>
+    <header class="sheet-header title-row">
+        <div class="brand">
+          <img src="96194-middle-removebg-preview.png" alt="Pokémon Logo" class="header-logo">
+        </div>
+
+        <div class="trainer-header">
+          <div class="trainer-preview" id="trainer-preview">
+            <img id="trainer-avatar-img" src="hugug.png">
+          </div>
+          <div class="trainer-inputs">
+            <input id="player-name-input" value="Trainer Name" aria-label="Trainer Name">
+            <button id="open-trainer-modal" class="btn small neutral" aria-haspopup="dialog">Change Avatar</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="landing-main">
+        <section class="left-column">
+          <div class="hero-card glass">
+            <h2>BATTLE BEGINS</h2>
+            <p class="muted">Select a Pokémon</p>
+            <div class="hero-actions">
+              <button id="open-pokedex-btn" class="btn primary large" aria-haspopup="dialog">Select Pokémon</button>
+              <button id="start-game-btn" class="btn secondary large">Quick Battle</button>
+            </div>
+          </div>
+
+          <div class="stats-row">
+            <div class="card glass small">
+              <h4>Wallet</h4>
+              <div class="wallet"><i class="fab fa-bitcoin"></i> <span id="btc-balance">0.00 BTC</span></div>
+            </div>
+
+            <div class="card glass small">
+              <h4>Trainer</h4>
+              <div id="trainer-name-display" class="muted">Jim</div>
+            </div>
+          </div>
+        </section>
+
+        <aside class="right-column">
+          <div class="starter-panel glass">
+            <h4>Current Pokémon</h4>
+            <div class="starter-preview">
+              <img id="starter-preview" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/7.png" alt="Starter Pokémon">
+              <div id="starter-name">Squirtle</div>
+            </div>
+            <div class="small-controls">
+              <button id="marketplace-btn" class="btn neutral">Marketplace</button>
+              <button id="settings-btn" class="btn neutral">Settings</button>
+            </div>
+          </div>
+
+         
+        </aside>
+      </main>
+
+     
+    </div>
+  </div>
+
+  <div id="battle-arena" class="screen" role="application" aria-label="Battle arena">
+    <div class="arena-bg cinematic-arena-bg" aria-hidden="true"></div>
+
+    <header class="battle-header glass">
+      <div class="left-head">
+        <div id="current-trainer-name">Trainer: Ash Ketchum</div>
+        <div class="sub muted" id="current-pokemon-sub">Squirtle • Lv. 15</div>
+      </div>
+      <div class="right-head">
+        <div class="wallet-display"><i class="fab fa-bitcoin"></i> <span id="btc-balance-2">0.00 BTC</span></div>
+      </div>
+    </header>
+
+    <main class="battle-stage cinematic-stage" aria-live="polite">
+      <section class="pokemon-container opponent cinematic-layer" data-side="opponent" aria-label="Opponent">
+        <div class="hud">
+          <div class="pokemon-name" id="opponent-name">Charizard</div>
+          <div class="health-bar-container">
+            <div class="health-bar-outer">
+              <div id="opponent-health-bar" class="health-bar inner" style="width:100%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sprite-wrap">
+          <img id="opponent-pokemon-img" class="pokemon-img" src="" alt="Opponent Pokémon">
+          <div class="vfx-layer" id="opponent-vfx" aria-hidden="true"></div>
+          <canvas id="opponent-particles" class="particle-canvas" aria-hidden="true"></canvas>
+        </div>
+      </section>
+
+      <div class="center-ui cinematic-center">
+        <div id="action-log" class="action-log">Choose your move.</div>
+       
+
+<div id="cinematic-result" class="cinematic-result hidden" role="dialog" aria-hidden="true" aria-live="assertive">
+          <div class="cinematic-card">
+            <div id="cinematic-title" class="cinematic-title">You Win!</div>
+            <div id="cinematic-sub" class="cinematic-sub">+0.00 BTC</div>
+            <div class="cinematic-actions">
+              <button id="cinematic-continue" class="btn primary">Continue</button>
+              <button id="cinematic-rematch" class="btn neutral">Rematch</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="pokemon-container player cinematic-layer" data-side="player" aria-label="Player">
+        <div class="sprite-wrap">
+          <img id="player-pokemon-img" class="pokemon-img player-sprite" src="" alt="Your Pokémon">
+          <div class="vfx-layer" id="player-vfx" aria-hidden="true"></div>
+          <canvas id="player-particles" class="particle-canvas" aria-hidden="true"></canvas>
+        </div>
+
+        <div class="hud">
+          <div class="pokemon-name" id="player-name">Squirtle</div>
+          <div class="health-bar-container">
+            <div class="health-bar-outer">
+              <div id="player-health-bar" class="health-bar inner" style="width:100%"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="battle-controls glass">
+      <div class="controls-grid">
+        <button class="control-btn normal-attack-btn" data-move="Normal Attack" data-power="15">Normal Attack</button>
+        <button class="control-btn super-attack-btn" data-move="Super Attack" data-power="30">Super Attack</button>
+        <button class="control-btn combo-btn" data-move="Combo" data-power="45">Combo</button>
+       
+
+<button class="control-btn btn neutral" id="main-menu-btn">Main Menu</button>
+      </div>
+    </footer>
+  </div>
+
+  <div id="pokedex-modal" class="modal" role="dialog" aria-hidden="true" aria-label="Pokédex selector">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h3>Select your Pokémon</h3>
+        <div class="modal-actions">
+          <button class="close-modal-btn btn small">Close</button>
+        </div>
+      </header>
+
+      <main class="pokedex-main">
+        <div class="carousel-wrap" id="pokedex-carousel" aria-live="polite">
+          </div>
+
+        <div class="carousel-controls">
+          <button id="carousel-prev" class="btn small">&#10094; Prev</button>
+          <button id="carousel-next" class="btn small">Next &#10095;</button>
+        </div>
+      </main>
+
+      <footer class="modal-footer">
+        <button id="select-carousel-pokemon" class="btn primary">Select & Close</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="trainer-modal" class="modal" role="dialog" aria-hidden="true" aria-label="Trainer avatar selector">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h3>Choose a Avatar from the BootCampers</h3>
+        <button class="close-modal-btn btn small">Close</button>
+      </header>
+
+      <main class="trainer-main">
+        <div class="avatar-grid" id="avatar-grid">
+          </div>
+
+        <div class="upload-row">
+          <label class="btn small">Upload Image
+            <input id="trainer-upload" type="file" accept="image/*" style="display:none" />
+          </label>
+          <div class="upload-hint muted">PNG/JPG/GIF up to 2MB</div>
+        </div>
+      </main>
+
+      <footer class="modal-footer">
+        <button id="apply-avatar" class="btn primary">Apply</button>
+      </footer>
+    </div>
+  </div>
+
+  <div id="marketplace-modal" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+      <header><h3>Pokémon Marketplace</h3><button class="close-modal-btn btn small">Close</button></header>
+      <main>
+        <div class="market-info">Balance: <b id="market-btc">0.05 BTC</b></div>
+        <div id="pokemon-shop-list" class="shop-grid"></div>
+      </main>
+      <footer class="modal-footer"></footer>
+    </div>
+  </div>
+
+  <div id="settings-modal" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+      <header><h3>Settings</h3><button class="close-modal-btn btn small">Close</button></header>
+      <main>
+        <label>Volume <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.85"></label>
+        <label>Graphics
+          <select id="graphics-quality">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low (Mobile)</option>
+          </select>
+        </label>
+
+        <div class="setting-note muted">Performance mode: High visual fidelity by default. Use Low for phones.</div>
+      </main>
+      <footer class="modal-footer"></footer>
+    </div>
+  </div>
+
+  <script src="pkmn.js" defer></script>
+  <script>
+        const canvas = document.getElementById("fire-fx");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const flames = [];
+const flameCount = 60;
+
+// generate glowing fire particles
+for (let i = 0; i < flameCount; i++) {
+  flames.push({
+    x: Math.random() * canvas.width,
+    y: canvas.height - Math.random() * 100,
+    radius: Math.random() * 30 + 10,
+    alpha: Math.random() * 0.4 + 0.3,
+    speed: Math.random() * 0.5 + 0.2,
+    hue: 30 + Math.random() * 30 // orange/yellow range
+  });
+}
+
+function animateFire() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  flames.forEach(f => {
+    // draw glowing circle
+    const gradient = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.radius);
+    gradient.addColorStop(0, `hsla(${f.hue}, 100%, 60%, ${f.alpha})`);
+    gradient.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    // particle motion
+    f.y -= f.speed;
+    f.x += (Math.random() - 0.5) * 0.5; // small horizontal wobble
+    f.alpha -= 0.003;
+
+    // recycle particles when they fade
+    if (f.alpha <= 0) {
+      f.x = Math.random() * canvas.width;
+      f.y = canvas.height - Math.random() * 80;
+      f.radius = Math.random() * 25 + 10;
+      f.alpha = Math.random() * 0.5 + 0.3;
+    }
+  });
+
+  requestAnimationFrame(animateFire);
+}
+animateFire();
+
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+    </script>
+</body>
+</html>
+

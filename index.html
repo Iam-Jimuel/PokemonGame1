@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Project</title>
+    <link rel="stylesheet" href="pkmn.css">
+</head>
+<body class="initial-landing-body">
+    <div class="initial-landing-screen">
+        <canvas id="fire-fx"></canvas>
+        <img src="International_Pokémon_logo.svg.png" alt="Pokémon Logo" class="initial-logo">
+        <div class="initial-button-container">
+            <button id="start-game-initial" class="btn primary initial-btn">START</button>
+            <button id="settings-initial" class="btn neutral initial-btn">SETTINGS</button>
+        </div>
+    </div>
+    <script src="index.js"></script>
+    <script>
+        const canvas = document.getElementById("fire-fx");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const flames = [];
+const flameCount = 60;
+
+// generate glowing fire particles
+for (let i = 0; i < flameCount; i++) {
+  flames.push({
+    x: Math.random() * canvas.width,
+    y: canvas.height - Math.random() * 100,
+    radius: Math.random() * 30 + 10,
+    alpha: Math.random() * 0.4 + 0.3,
+    speed: Math.random() * 0.5 + 0.2,
+    hue: 30 + Math.random() * 30 // orange/yellow range
+  });
+}
+
+function animateFire() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  flames.forEach(f => {
+    // draw glowing circle
+    const gradient = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.radius);
+    gradient.addColorStop(0, `hsla(${f.hue}, 100%, 60%, ${f.alpha})`);
+    gradient.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    // particle motion
+    f.y -= f.speed;
+    f.x += (Math.random() - 0.5) * 0.5; // small horizontal wobble
+    f.alpha -= 0.003;
+
+    // recycle particles when they fade
+    if (f.alpha <= 0) {
+      f.x = Math.random() * canvas.width;
+      f.y = canvas.height - Math.random() * 80;
+      f.radius = Math.random() * 25 + 10;
+      f.alpha = Math.random() * 0.5 + 0.3;
+    }
+  });
+
+  requestAnimationFrame(animateFire);
+}
+animateFire();
+
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+
+    </script>
+</body>
+</html>
