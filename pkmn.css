@@ -18,6 +18,8 @@
 }
 html,body{
     height:100%;
+    padding: 0;
+    margin: 0;
 }
 body{
   font-family:var(--font);
@@ -96,7 +98,7 @@ body{
     flex-wrap: wrap;
     justify-content: center;
 }
-#open-trainer-modal{
+#open-trainer-modal2{
     border: 2px solid white;
     background: rgb(250, 204, 18);
     color: white;
@@ -276,6 +278,26 @@ body{
     border-color: #fff; /* Only change border color, not size */
     /* Keep the same padding */
 }
+.btn.primary2{
+    background: #ff9215;
+    color: #fff;
+    box-shadow: 0 10px 28px rgba(59,130,246,0.09);
+    cursor: pointer;
+    
+    /* Reserve space for hover effects */
+    border: 2px solid transparent; /* Same space as hover border */
+    padding: 12px 24px; /* Set specific padding */
+    box-sizing: border-box; /* Include border in element's dimensions */
+    transition: all 0.4s ease; /* Move transition here */
+    margin-top: 25px;
+}
+
+.btn.primary2:hover{
+    background: transparent;
+    color: #fff;
+    border-color: #fff; /* Only change border color, not size */
+    /* Keep the same padding */
+}
 .btn.secondary{
     background: rgb(248, 205, 32);
     color:#ffffff;
@@ -296,11 +318,37 @@ body{
     font-size:0.9rem;
     border-radius:10px;
     background-color: white;
-    color: #155fff;
+    color: #032774;
 }
 .close-modal-btn {
     background-color: #3e3e3e;
     color: white;
+    box-sizing: border-box;
+    cursor: pointer;
+    box-shadow: 0 10px 28px rgba(59,130,246,0.09);
+    border: 2px solid white; /* Same space as hover border */
+    padding: 12px 24px; /* Set specific padding */
+    box-sizing: border-box; /* Include border in element's dimensions */
+    transition: all 0.4s ease; /* Move transition here */
+
+
+}
+.close-modal-btn2 {
+    background-color: #3e3e3e;
+    color: white;
+    box-sizing: border-box;
+    cursor: pointer;
+    box-shadow: 0 10px 28px rgba(59,130,246,0.09);
+    border: 2px solid white; /* Same space as hover border */
+    padding: 12px 24px; /* Set specific padding */
+    box-sizing: border-box; /* Include border in element's dimensions */
+    transition: all 0.4s ease; /* Move transition here */
+
+
+}
+.close-modal-btn:hover{
+    color: white;
+    background-color: transparent;
 }
 /* starter panel */
 .starter-panel{
@@ -751,21 +799,51 @@ body{
     background:rgba(2,6,23,0.6);
     z-index:110;
 }
+
+.modal2{
+    position:fixed;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:rgba(2,6,23,0.6);
+    z-index:110;
+}
 .modal.show{
     display:flex;
 }
+.modal2.show{
+    display:flex;
+}
 .modal-content{
-    background:#155fff;
+    background:#0739a3;
     color:#ffffff;
     padding:18px;
     border-radius:12px;
     width:92%;
     max-width:980px;
     max-height:90vh;
-    height: 43%;
-    overflow:auto;
+    height: 65%;
+    overflow: hidden;
+}
+.modal-content2{
+    background:#070067;
+    color:#ffffff;
+    padding:20px;
+    border-radius:12px;
+    width:60%;
+    max-width:980px;
+    max-height:90vh;
+    height: 50%;
+    overflow: hidden;
 }
 .modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:8px;
+}
+.modal-header2{
     display:flex;
     justify-content:space-between;
     align-items:center;

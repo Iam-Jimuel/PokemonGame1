@@ -15,7 +15,7 @@ const DOM = {
     // Landing Page elements (on game.html)
     startGameBtn: document.getElementById('start-game-btn'),
     openPokedexBtn: document.getElementById('open-pokedex-btn'),
-    openTrainerModal: document.getElementById('open-trainer-modal'),
+    openTrainerModal: document.getElementById('open-trainer-modal2'),
     marketplaceBtn: document.getElementById('marketplace-btn'),
     settingsBtn: document.getElementById('settings-btn'),
     playerNameInput: document.getElementById('player-name-input'),
@@ -41,6 +41,7 @@ const DOM = {
     opponentVFX: document.getElementById('opponent-vfx'),
     pokemonShopList: document.getElementById('pokemon-shop-list'),
     closeModalBtns: document.querySelectorAll('.close-modal-btn'),
+    closeModalBtns2: document.querySelectorAll('.close-modal-btn2'),
     mainMenuBtn: document.getElementById('main-menu-btn'),
 
     // PokeDex Carousel elements
@@ -94,7 +95,7 @@ presetAvatars: [
     './pokeimages/avatars/Screenshot 2025-10-10 153325.png',      // Jowen
     './pokeimages/avatars/Screenshot 2025-10-10 090242.png',      // Eubie
 ],
-    audioAmbience: new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'), // Placeholder URL
+    audioAmbience: new Audio('./pokeimages/sounds/battle-fighting-warrior-drums-372078.mp3'), 
     graphicsMode: 'high',
 };
 
@@ -154,7 +155,14 @@ function updateHealthBar(barElement, currentHP, maxHP) {
 function logAction(message) {
     DOM.actionLog.textContent = message;
 }
-
+/** Simple music starter */
+function startBackgroundMusic() {
+    GAME_STATE.audioAmbience.loop = true;
+    GAME_STATE.audioAmbience.volume = 0.7; // Medium volume
+    GAME_STATE.audioAmbience.play().catch(error => {
+        console.log("Music will start after user clicks");
+    });
+}
 // ==========================================================
 //                 3. CAROUSEL & SELECTION LOGIC
 // ==========================================================
@@ -572,12 +580,18 @@ DOM.trainerUpload.addEventListener('change', (e) => {
 // --- Modal Close Buttons ---
 DOM.closeModalBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
-        const modal = e.target.closest('.modal');
+        const modal = e.target.closest('.modal')
         toggleModal(modal, false);
     });
 });
+DOM.closeModalBtns2.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const modal2 = e.target.closest('.modal2')
+        toggleModal(modal2, false);
+    });
+});
 
-// --- Battle Arena Events (KOF Style) ---
+// --- Battle Arena Events ---
 DOM.attackButtons.forEach(button => {
     button.addEventListener('click', () => {
         const moveName = button.getAttribute('data-move');
@@ -621,17 +635,24 @@ DOM.graphicsQuality.addEventListener('change', (e) => {
 // ==========================================================
 //                 8. INITIALIZATION
 // ==========================================================
+// Start music after any user click (browser requirement)
+document.addEventListener('click', function() {
+    startBackgroundMusic();
+}, { once: true }); // Only need to click once
+
+// ==========================================================
+//                 8. INITIALIZATION
+// ==========================================================
 document.addEventListener('DOMContentLoaded', () => {
     switchScreen(DOM.landingPage);
     renderLandingUI();
    
-    // Set initial avatar to be selectable
+    // Set initial avatar
     GAME_STATE.trainerAvatar = DOM.trainerAvatarImg.src;
 
-    // Set initial volume for ambience (looping, not auto-playing)
-    GAME_STATE.audioAmbience.loop = true;
-    GAME_STATE.audioAmbience.volume = 0.85;
+    // Music will start automatically after first user click
+    // No extra settings needed!
 
-    // Apply graphics setting on load
+    // Apply graphics setting
     document.body.classList.toggle('low-graphics', GAME_STATE.graphicsMode === 'low');
 });

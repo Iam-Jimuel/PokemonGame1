@@ -72,7 +72,11 @@ window.addEventListener("resize", () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 });
-
+    // instant background music
+    const music = new Audio('./pokeimages/sounds/ready-to-start-116108.mp3');
+    music.loop = true;
+    music.volume = 0.7;
+    document.addEventListener('click', () => music.play(), { once: true });
     </script>
 </body>
 </html>
