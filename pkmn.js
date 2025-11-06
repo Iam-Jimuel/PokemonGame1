@@ -283,7 +283,7 @@ function renderMarketplace() {
             <img src="${getSpriteUrl(pokemon.id)}" alt="${pokemon.name} Sprite">
             <div class="kicker">HP: ${pokemon.power.hp} | ATK: ${pokemon.power.atk}</div>
             <p>Cost: <strong>${pokemon.cost.toFixed(2)} BTC</strong></p>
-            <button class="btn small primary buy-btn" data-id="${pokemon.id}"
+            <button class="btn small4 primary buy-btn" data-id="${pokemon.id}"
                 ${!canAfford ? 'disabled' : ''}
                 ${isCurrent ? 'disabled' : ''}>
                 ${isCurrent ? 'Current Pokémon' : (canAfford ? 'BUY' : 'Too Expensive')}

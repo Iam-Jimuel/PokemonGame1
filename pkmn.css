@@ -17,9 +17,11 @@
     padding:0;
 }
 html,body{
-    height:100%;
+     margin: 0;
     padding: 0;
-    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* removes scrollbars */
 }
 body{
   font-family:var(--font);
@@ -145,6 +147,7 @@ body{
 .screen.active{
     display:flex;
     flex-direction:column;
+    width: 100%;
 }
 .sheet{
     padding:20px;
@@ -260,7 +263,7 @@ body{
     font-weight:800;
 }
 .btn.primary{
-    background: #ffe62b;
+    background: #077c60;
     color: #fff;
     box-shadow: 0 10px 28px rgba(59,130,246,0.09);
     cursor: pointer;
@@ -279,7 +282,7 @@ body{
     /* Keep the same padding */
 }
 .btn.primary2{
-    background: #ff9215;
+    background: #ffc118;
     color: #fff;
     box-shadow: 0 10px 28px rgba(59,130,246,0.09);
     cursor: pointer;
@@ -331,11 +334,27 @@ body{
     box-sizing: border-box; /* Include border in element's dimensions */
     transition: all 0.4s ease;
 }
+.btn.small3{
+    padding:8px 10px;
+    font-size:0.9rem;
+    border-radius:10px;
+    background-color: white;
+    color: #032774;
+    margin-top: 10px;
+}
 .btn.small2:hover{
     background: transparent;
     color: #fff;
     border-color: #fff; /* Only change border color, not size */
     /* Keep the same padding */
+}
+.btn.small4{
+    padding:8px 10px;
+    font-size:0.9rem;
+    border-radius:10px;
+    background-color: white;
+    color: #077c60;
+    margin-top: 10px;
 }
 .close-modal-btn {
     background-color: #3e3e3e;
@@ -406,14 +425,19 @@ body{
 }
 /* -------------------- BATTLE ARENA (KOF Style) -------------------- */
 .battle-arena{
-    position: relative;
-    width: 100%;
-    height: 100%;
+     position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;  
+    height: 100vh; 
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     overflow: hidden;
     background: url('60c3f70a40bcb.jpg') no-repeat center center;
-    background-size: cover;
+    background-size: cover;  
+    background-attachment: fixed; 
+    z-index: 0;
 }
 
 .arena-bg.cinematic-arena-bg {
@@ -437,7 +461,25 @@ body{
 .battle-header .left-head, .battle-header .right-head {
     display: none;
 }
-
+.stats-row{
+    margin-top: 20px;
+}
+#starter-preview{
+    width: 200px;
+    height: auto;
+}
+.starter-panel{
+    background: #096242;
+    padding: 12px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    border: 3px solid white;
+    width: 200px;
+    margin-left: 100px;
+}
 /* Main battle stage for sprites and HUDs */
 .battle-stage.cinematic-stage {
     flex: 1;
@@ -485,7 +527,7 @@ body{
     background: transparent;
 }
 
-/* KOF Style HUD */
+/* COMBAT STYLE HUD */
 .hud {
     display: flex;
     flex-direction: row;
@@ -872,8 +914,9 @@ body{
     width:92%;  
     max-width:980px;
     max-height:90vh;
-    height: 70%;
+    height: 73%;
     overflow: hidden;
+    border: 4px solid #0b703a;
 }
 .modal-content2{
     background:#114af6;
@@ -886,6 +929,21 @@ body{
     height: 60%;
     overflow: hidden;
     border: 4px solid #fee100;
+}
+.modal3.show{
+    display:flex;
+}
+.modal-content3{
+    background:#0739a3;
+    color:#ffffff;
+    padding:18px;
+    border-radius:12px;
+    width:92%;  
+    max-width:980px;
+    max-height:90vh;
+    height: 70%;
+    overflow: hidden;
+    border: 4px solid #0b703a;
 }
 .modal-header{
     display:flex;
@@ -917,7 +975,7 @@ body{
     width:220px;
     height:220px;
     border-radius:12px;
-    background:linear-gradient(180deg,#000000,#171717);
+    background-color: #096242;
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -979,9 +1037,11 @@ body{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
     gap:12px;
+    margin-left: 170px;
+    margin-top: 20px;
 }
 .pokemon-card{
-    background:linear-gradient(180deg,#fff,#f7fbff);
+    background-color: #00a68a;
     padding:12px;border-radius:12px;
     text-align:center;box-shadow:0 10px 28px rgba(2,6,23,0.08);
 }
@@ -990,7 +1050,15 @@ body{
     height:86px;
     object-fit:contain;
 }
-
+.market-info{
+    margin-top: 10px;
+    background-color: #ffb908;
+    color: #000;
+    border: 3px solid black;
+    padding: 7px;
+    width: fit-content;
+    border-radius: 5px;
+}
 /* -------------------- PARTICLE REDUCTION (LOW GRAPHICS) -------------------- */
 body.low-graphics .water-fx, body.low-graphics .fire-fx, body.low-graphics .electric-fx, body.low-graphics .impact-fx,
 body.low-graphics .particle-canvas {
@@ -1174,9 +1242,17 @@ body.low-graphics .particle-canvas {
 .hidden{
     display:none;
 }
-.muted{
+.muted2{
     color:var(--muted);
     font-weight: bold;
+}
+.muted{
+    color:var(--muted);
+    background-color: #096241b5;
+    padding: 5px 7px;
+    border-radius: 6px;
+    font-weight: bold;
+    width: fit-content;
 }
 .small{
     font-size:0.9rem;
