@@ -289,7 +289,7 @@ body{
     padding: 12px 24px; /* Set specific padding */
     box-sizing: border-box; /* Include border in element's dimensions */
     transition: all 0.4s ease; /* Move transition here */
-    margin-top: 25px;
+    margin-top: 30px;
 }
 
 .btn.primary2:hover{
@@ -319,6 +319,23 @@ body{
     border-radius:10px;
     background-color: white;
     color: #032774;
+}
+.btn.small2{
+    padding:8px 10px;
+    font-size:0.9rem;
+    border-radius:10px;
+    background-color: white;
+    color: #032774;
+    margin-top: 25px;
+    border: 2px solid transparent; /* Same space as hover border */
+    box-sizing: border-box; /* Include border in element's dimensions */
+    transition: all 0.4s ease;
+}
+.btn.small2:hover{
+    background: transparent;
+    color: #fff;
+    border-color: #fff; /* Only change border color, not size */
+    /* Keep the same padding */
 }
 .close-modal-btn {
     background-color: #3e3e3e;
@@ -373,10 +390,20 @@ body{
 .card.glass{
     padding:12px;
     border-radius:12px;
-    background:var(--glass);
-    
+    background-color: #ffb702;
+    border: 3px solid rgb(255, 254, 254);
+    width: 200px;
+    color: rgb(0, 0, 0);
 }
+.card.glass2{
+    padding:12px;
+    border-radius:12px;
+    background-color: #000;
+    border: 3px solid rgb(255, 254, 254);
+    margin-top: 10px;
+    width: 200px;
 
+}
 /* -------------------- BATTLE ARENA (KOF Style) -------------------- */
 .battle-arena{
     position: relative;
@@ -442,6 +469,21 @@ body{
     align-items: flex-end;
     padding-right: 20px;
 }
+#marketplace-btn{
+    border: 2px solid white;
+    color: white;
+    background: rgb(12, 38, 189);
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+#marketplace-btn:hover{
+    border: 2px solid white;
+    color: white;
+    background: transparent;
+}
 
 /* KOF Style HUD */
 .hud {
@@ -459,7 +501,14 @@ body{
     box-shadow: 0 0 15px rgba(0,255,0,0.5);
     padding: 5px;
 }
-
+#starter-name{
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-transform: uppercase;  
+    margin: 0 auto;
+    text-align: center;
+}
 .pokemon-container.opponent .hud {
     left: 20px;
     justify-content: flex-start;
@@ -561,7 +610,7 @@ body{
     position: relative;
     margin-bottom: 10px;
     bottom: 0;
-    /* Use CSS variable for flipping to allow animations to override */
+    /* flipping to allow animations to override */
     transform: translate(0, 0) scaleX(var(--flip, 1));
     transition: transform 300ms ease-out, filter 260ms;
 }
@@ -820,22 +869,23 @@ body{
     color:#ffffff;
     padding:18px;
     border-radius:12px;
-    width:92%;
+    width:92%;  
     max-width:980px;
     max-height:90vh;
-    height: 65%;
+    height: 70%;
     overflow: hidden;
 }
 .modal-content2{
-    background:#070067;
+    background:#114af6;
     color:#ffffff;
     padding:20px;
     border-radius:12px;
     width:60%;
     max-width:980px;
     max-height:90vh;
-    height: 50%;
+    height: 60%;
     overflow: hidden;
+    border: 4px solid #fee100;
 }
 .modal-header{
     display:flex;
@@ -867,7 +917,7 @@ body{
     width:220px;
     height:220px;
     border-radius:12px;
-    background:linear-gradient(180deg,#ffe208,#175fe7);
+    background:linear-gradient(180deg,#000000,#171717);
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -876,7 +926,7 @@ body{
     transition:transform 360ms var(--ui-ease),opacity 360ms;
 }
 .carousel-slide.dim{
-    opacity:0.18;
+    opacity:0.20;
     transform:scale(0.72);
 }
 .carousel-controls{
@@ -893,17 +943,29 @@ body{
     gap:8px;
 }
 .avatar-grid .avatar-option{
-    width:80px;
-    height:80px;
+    width:95px;
+    height:95px;
     border-radius:10px;
     overflow:hidden;
     border:3px solid rgba(0,0,0,0.06);
     cursor:pointer;
+    margin-left: 30px;
 }
 .avatar-grid .avatar-option img{
     width:100%;
     height:100%;
     object-fit:cover;
+    cursor: pointer;
+    
+    /* Reserve space for hover effects */
+   
+    box-sizing: border-box; /* Include border in element's dimensions */
+    transition: all 0.4s ease; /* Move transition here */
+}
+.avatar-grid .avatar-option img:hover{
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+
 }
 .upload-row{
     display:flex;

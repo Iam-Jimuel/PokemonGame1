@@ -9,7 +9,6 @@ const DOM = {
     pokedexModal: document.getElementById('pokedex-modal'),
     trainerModal: document.getElementById('trainer-modal'),
     marketplaceModal: document.getElementById('marketplace-modal'),
-    settingsModal: document.getElementById('settings-modal'),
     cinematicResult: document.getElementById('cinematic-result'),
    
     // Landing Page elements (on game.html)
@@ -17,7 +16,6 @@ const DOM = {
     openPokedexBtn: document.getElementById('open-pokedex-btn'),
     openTrainerModal: document.getElementById('open-trainer-modal2'),
     marketplaceBtn: document.getElementById('marketplace-btn'),
-    settingsBtn: document.getElementById('settings-btn'),
     playerNameInput: document.getElementById('player-name-input'),
     trainerNameDisplay: document.getElementById('trainer-name-display'),
     trainerAvatarImg: document.getElementById('trainer-avatar-img'),
@@ -60,9 +58,6 @@ const DOM = {
     cinematicSub: document.getElementById('cinematic-sub'),
     cinematicContinue: document.getElementById('cinematic-continue'),
     cinematicRematch: document.getElementById('cinematic-rematch'), // Included Rematch button
-   
-    // Settings
-    graphicsQuality: document.getElementById('graphics-quality'),
 };
 
 const STARTER_POKEMON_LIST = [
@@ -89,11 +84,12 @@ const GAME_STATE = {
         { id: 150, name: 'Mewtwo', cost: 0.50, power: { hp: 200, atk: 30, spAtk: 70 } },
     ],
     // Replace the presetAvatars array with local paths
+    // BOOTACAMPERS AVATARS
 presetAvatars: [
-    './pokeimages/avatars/Screenshot 2025-10-09 140340.png',        // Jim
-    './pokeimages/avatars/Screenshot 2025-10-10 090212.png',     // Khalil
-    './pokeimages/avatars/Screenshot 2025-10-10 153325.png',      // Jowen
-    './pokeimages/avatars/Screenshot 2025-10-10 090242.png',      // Eubie
+    './pokeimages/avatars/Screenshot 2025-10-09 140340.png',        
+    './pokeimages/avatars/Screenshot 2025-10-10 090212.png',     
+    './pokeimages/avatars/Screenshot 2025-10-10 153325.png',      
+    './pokeimages/avatars/Screenshot 2025-10-10 090242.png',      
 ],
     audioAmbience: new Audio('./pokeimages/sounds/battle-fighting-warrior-drums-372078.mp3'), 
     graphicsMode: 'high',
@@ -549,10 +545,6 @@ DOM.marketplaceBtn.addEventListener('click', () => {
     toggleModal(DOM.marketplaceModal, true);
 });
 
-DOM.settingsBtn.addEventListener('click', () => {
-    toggleModal(DOM.settingsModal, true);
-});
-
 DOM.startGameBtn.addEventListener('click', () => {
     switchScreen(DOM.battleArena);
     initializeBattle();
@@ -622,15 +614,6 @@ DOM.cinematicRematch.addEventListener('click', () => {
 });
 // -----------------------------
 
-// Settings
-document.getElementById('volume-slider').addEventListener('input', (e) => {
-    GAME_STATE.audioAmbience.volume = parseFloat(e.target.value);
-});
-
-DOM.graphicsQuality.addEventListener('change', (e) => {
-    GAME_STATE.graphicsMode = e.target.value;
-    document.body.classList.toggle('low-graphics', GAME_STATE.graphicsMode === 'low');
-});
 
 // ==========================================================
 //                 8. INITIALIZATION

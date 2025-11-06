@@ -33,7 +33,7 @@
         <section class="left-column">
           <div class="hero-card glass">
             <h2>BATTLE BEGINS</h2>
-            <p class="muted">Select a Pokémon</p>
+            <p class="muted">DESTROY AMLA TABLE</p>
             <div class="hero-actions">
               <button id="open-pokedex-btn" class="btn primary large" aria-haspopup="dialog">Select Pokémon</button>
               <button id="start-game-btn" class="btn secondary large">Quick Battle</button>
@@ -46,7 +46,7 @@
               <div class="wallet"><i class="fab fa-bitcoin"></i> <span id="btc-balance">0.00 BTC</span></div>
             </div>
 
-            <div class="card glass small">
+            <div class="card glass2 small">
               <h4>Trainer</h4>
               <div id="trainer-name-display" class="muted">Jim</div>
             </div>
@@ -62,7 +62,6 @@
             </div>
             <div class="small-controls">
               <button id="marketplace-btn" class="btn neutral">Marketplace</button>
-              <button id="settings-btn" class="btn neutral">Settings</button>
             </div>
           </div>
 
@@ -190,7 +189,7 @@
           </div>
 
         <div class="upload-row">
-          <label class="btn small">Upload Image
+          <label class="btn small2">Upload Image
             <input id="trainer-upload" type="file" accept="image/*" style="display:none" />
           </label>
           <div class="upload-hint muted">PNG/JPG/GIF up to 2MB</div>
@@ -209,25 +208,6 @@
       <main>
         <div class="market-info">Balance: <b id="market-btc">0.05 BTC</b></div>
         <div id="pokemon-shop-list" class="shop-grid"></div>
-      </main>
-      <footer class="modal-footer"></footer>
-    </div>
-  </div>
-
-  <div id="settings-modal" class="modal" role="dialog" aria-hidden="true">
-    <div class="modal-content">
-      <header><h3>Settings</h3><button class="close-modal-btn btn small">Close</button></header>
-      <main>
-        <label>Volume <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.85"></label>
-        <label>Graphics
-          <select id="graphics-quality">
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low (Mobile)</option>
-          </select>
-        </label>
-
-        <div class="setting-note muted">Performance mode: High visual fidelity by default. Use Low for phones.</div>
       </main>
       <footer class="modal-footer"></footer>
     </div>
