@@ -322,6 +322,7 @@ body{
     border-radius:10px;
     background-color: white;
     color: #032774;
+    margin-top: 10px;
 }
 .btn.small2{
     padding:8px 10px;
@@ -914,7 +915,7 @@ body{
     width:92%;  
     max-width:980px;
     max-height:90vh;
-    height: 73%;
+    height: 75%;
     overflow: hidden;
     border: 4px solid #0b703a;
 }
