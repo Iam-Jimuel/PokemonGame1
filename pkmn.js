@@ -1,7 +1,7 @@
 const POKEAPI_BASE = 'https://pokeapi.co/api/v2/pokemon/';
 const SPRITE_BASE = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/';
 
-//Document Object
+//Document Object - All the important HTML elements
 const DOM = {
     // Screens & Modals
     landingPage: document.getElementById('landing-page'), // This is now the "game.html" landing page
@@ -57,9 +57,9 @@ const DOM = {
     cinematicTitle: document.getElementById('cinematic-title'),
     cinematicSub: document.getElementById('cinematic-sub'),
     cinematicContinue: document.getElementById('cinematic-continue'),
-    cinematicRematch: document.getElementById('cinematic-rematch'), // Included Rematch button
+    cinematicRematch: document.getElementById('cinematic-rematch'), // Rematch button
 };
-
+// defines the initial Pokémon choices player can select from the game
 const STARTER_POKEMON_LIST = [
     { id: 7, name: 'Squirtle', type: 'water', hp: 100, atk: 15, spAtk: 30 },
     { id: 1, name: 'Bulbasaur', type: 'grass', hp: 110, atk: 18, spAtk: 25 },
@@ -68,10 +68,11 @@ const STARTER_POKEMON_LIST = [
     { id: 132, name: 'Ditto', type: 'normal', hp: 150, atk: 10, spAtk: 10 },
 ];
 
+// STATUS OF THE PLAYER GAME SESSION
 const GAME_STATE = {
     playerName: DOM.playerNameInput.value,
     trainerAvatar: DOM.trainerAvatarImg.src,
-    btcWallet: 0.00,
+    btcWallet: 100.000,
     playerPokemon: STARTER_POKEMON_LIST[0], // Squirtle by default
     opponentPokemon: { name: 'Charizard', id: 6, maxHP: 120, currentHP: 120, attack: 20, specialAttack: 40, type: 'fire' },
     isPlayerTurn: true,
@@ -84,7 +85,7 @@ const GAME_STATE = {
         { id: 150, name: 'Mewtwo', cost: 0.50, power: { hp: 200, atk: 30, spAtk: 70 } },
     ],
     // Replace the presetAvatars array with local paths
-    // BOOTACAMPERS AVATARS
+    // BOOTCAMPERS AVATARS
 presetAvatars: [
     './pokeimages/avatars/Screenshot 2025-10-09 140340.png',        
     './pokeimages/avatars/Screenshot 2025-10-10 090212.png',     
@@ -95,35 +96,33 @@ presetAvatars: [
     graphicsMode: 'high',
 };
 
-// ==========================================================
-//                 2. UTILITY & UI RENDERING
-// ==========================================================
+// collection of helper functions that handle common game operations and UI updates.
 
-/** Gets the direct URL for a Pokémon's sprite. */
+// Gets the direct URL for a Pokémon's sprite. 
 function getSpriteUrl(id) {
     return `${SPRITE_BASE}${id}.png`;
 }
 
-/** Helper to show/hide modals. */
+// Helper to show/hide modals. 
 function toggleModal(modalElement, show = true) {
     modalElement.classList.toggle('show', show);
     modalElement.setAttribute('aria-hidden', !show);
 }
 
-/** Switches the active screen. */
+// Manages screen transitions landing page to battle arena
 function switchScreen(screenToShow) {
     document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
     screenToShow.classList.add('active');
 }
 
-/** Updates the wallet display across all screens. */
+// Updates the wallet display across all screens. 
 function updateWalletDisplay() {
     const balance = `${GAME_STATE.btcWallet.toFixed(2)} BTC`;
     DOM.btcBalance.textContent = balance;
     DOM.marketBtc.textContent = balance;
 }
 
-/** Updates the landing page UI with the current Pokémon. */
+// Updates the landing page UI with the current Pokémon. 
 function renderLandingUI() {
     DOM.trainerNameDisplay.textContent = GAME_STATE.playerName;
    
@@ -134,24 +133,25 @@ function renderLandingUI() {
     updateWalletDisplay();
 }
 
-/** Updates the health bar visually. */
+// Updates the health bar visually. 
 function updateHealthBar(barElement, currentHP, maxHP) {
     const percentage = (currentHP / maxHP) * 100;
     const clampedPercentage = Math.max(0, percentage);
     barElement.style.width = `${clampedPercentage}%`;
    
+    // Changes color to red when HP drops below 20%
     if (clampedPercentage > 20) {
-        barElement.style.backgroundColor = '#0f0'; // Green
+        barElement.style.backgroundColor = 'rgba(19, 197, 19, 1)'; // Green
     } else {
         barElement.style.backgroundColor = 'var(--danger)'; // Red for critical
     }
 }
 
-/** Displays a message in the action log. */
+// Displays a message in the action log. 
 function logAction(message) {
     DOM.actionLog.textContent = message;
 }
-/** Simple music starter */
+// Simple music starter 
 function startBackgroundMusic() {
     GAME_STATE.audioAmbience.loop = true;
     GAME_STATE.audioAmbience.volume = 0.7; // Medium volume
@@ -163,7 +163,7 @@ function startBackgroundMusic() {
 //                 3. CAROUSEL & SELECTION LOGIC
 // ==========================================================
 
-/** Renders the Pokédex carousel slides. */
+// Renders the Pokédex carousel slides. 
 function renderCarousel() {
     DOM.pokedexCarousel.innerHTML = '';
    
@@ -184,7 +184,7 @@ function renderCarousel() {
     updateCarousel();
 }
 
-/** Updates the visual state of the carousel (which one is centered). */
+// Updates the visual state of the carousel (which one is centered). 
 function updateCarousel() {
     const slides = DOM.pokedexCarousel.querySelectorAll('.carousel-slide');
    
@@ -203,7 +203,7 @@ function updateCarousel() {
     });
 }
 
-/** Cycles the carousel left or right. */
+// Cycles the carousel left or right. 
 function moveCarousel(direction) {
     const total = STARTER_POKEMON_LIST.length;
     GAME_STATE.carouselIndex += direction;
@@ -217,7 +217,7 @@ function moveCarousel(direction) {
     updateCarousel();
 }
 
-/** Selects the currently centered Pokémon. */
+// Selects the currently centered Pokémon. 
 function selectCurrentPokemon() {
     const selected = STARTER_POKEMON_LIST[GAME_STATE.carouselIndex];
     GAME_STATE.playerPokemon = {
@@ -237,7 +237,7 @@ function selectCurrentPokemon() {
 //                 4. TRAINER AVATAR LOGIC
 // ==========================================================
 
-/** Renders the avatar selection grid. */
+// Renders the avatar selection grid. 
 function renderAvatarGrid() {
     DOM.avatarGrid.innerHTML = '';
     GAME_STATE.presetAvatars.forEach(url => {
@@ -257,17 +257,17 @@ function renderAvatarGrid() {
     });
 }
 
-/** Handles applying the selected or uploaded avatar. */
+// Handles applying the selected or uploaded avatar. 
 function applyTrainerAvatar() {
     DOM.trainerAvatarImg.src = GAME_STATE.trainerAvatar;
     toggleModal(DOM.trainerModal, false);
 }
 
 // ==========================================================
-//                 5. MARKETPLACE LOGIC
+//                 5. MARKETPLACE 
 // ==========================================================
 
-/** Renders the Marketplace with available Pokémon. */
+// Renders the Marketplace with available Pokémon.
 function renderMarketplace() {
     DOM.marketBtc.textContent = `${GAME_STATE.btcWallet.toFixed(2)} BTC`;
     DOM.pokemonShopList.innerHTML = '';
@@ -299,7 +299,7 @@ function renderMarketplace() {
     });
 }
 
-/** Handles the logic when a player buys a Pokémon. */
+// Handles the logic when a player buys a Pokémon. 
 function handleBuyPokemon(e) {
     const pokemonId = parseInt(e.target.getAttribute('data-id'));
     const newPokemon = GAME_STATE.shopInventory.find(p => p.id === pokemonId);
@@ -326,7 +326,7 @@ function handleBuyPokemon(e) {
 }
 
 
-/** Initializes the battle setup. */
+// Initializes the battle setup. 
 function initializeBattle() {
     GAME_STATE.isBattleRunning = true;
     GAME_STATE.isPlayerTurn = true;
@@ -349,7 +349,7 @@ function initializeBattle() {
     DOM.cinematicResult.classList.add('hidden'); // Ensure result screen is hidden
 }
 
-/** Disables/Enables manual controls. */
+// Disables/Enables manual controls.
 function lockControls(lock = true) {
     DOM.attackButtons.forEach(btn => btn.disabled = lock);
     DOM.mainMenuBtn.disabled = lock;
@@ -357,7 +357,7 @@ function lockControls(lock = true) {
     DOM.cinematicRematch.disabled = lock;
 }
 
-/** Applies cinematic VFX and game speed changes. */
+// Applies cinematic VFX and game speed changes. 
 function applyCinematicVFX(targetVFX, isSpecial) {
     const vfxType = isSpecial ? (GAME_STATE.playerPokemon.type || 'impact') : 'impact';
     const vfxElement = document.createElement('div');
@@ -381,7 +381,7 @@ function applyCinematicVFX(targetVFX, isSpecial) {
     }
 }
 
-/** Handles a single attack. */
+// Handles a single attack.
 function performAttack(moveName, power, attacker, defender, defenderVFX, defenderHealthBar, isPlayerMove) {
     return new Promise(resolve => {
         logAction(`${attacker.name} used ${moveName}!`);
@@ -441,7 +441,7 @@ function performAttack(moveName, power, attacker, defender, defenderVFX, defende
     });
 }
 
-/** Main battle turn handler. */
+// Main battle turn handler.
 async function handleBattleTurn(moveName, power) {
     if (!GAME_STATE.isPlayerTurn || !GAME_STATE.isBattleRunning) {
         return;
@@ -473,7 +473,7 @@ async function handleBattleTurn(moveName, power) {
     }, 2800);
 }
 
-/** Checks for a winner and handles game over/win state. */
+// Checks for a winner and handles game over/win state.
 function checkBattleEnd() {
     if (!GAME_STATE.isBattleRunning) return false;
 
@@ -487,7 +487,7 @@ function checkBattleEnd() {
     return false;
 }
 
-/** Handles the player winning (BTC Feature). */
+// Handles the player winning (BTC Feature).
 function handleWin() {
     GAME_STATE.isBattleRunning = false;
     lockControls(true); // Lock controls immediately
@@ -508,7 +508,7 @@ function handleWin() {
     setTimeout(() => DOM.opponentVFX.innerHTML = '', 3000);
 }
 
-/** Handles the player losing. */
+// Handles the player losing. 
 function handleLoss() {
     GAME_STATE.isBattleRunning = false;
     lockControls(true); // Lock controls immediately
